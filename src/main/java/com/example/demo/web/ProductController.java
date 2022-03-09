@@ -1,5 +1,7 @@
 package com.example.demo.web;
 
+import static java.util.stream.Collectors.toList;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,7 +57,7 @@ public class ProductController {
 	@GetMapping("/productbyid/{user_id}")
 	public List<Product> getProductById(@PathVariable Long user_id){
 		List<Product> products = productService.getAllProducts();
-		List<Product> products2 = products.stream().filter(s->s.getUser().getId()==user_id).toList();
+		List<Product> products2 = products.stream().filter(s->s.getUser().getId()==user_id).collect(toList());
 		return products2;
 	}
 

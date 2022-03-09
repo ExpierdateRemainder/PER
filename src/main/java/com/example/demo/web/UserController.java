@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.Service.UserService;
 import com.example.demo.model.User;
-
+import static java.util.stream.Collectors.toList;
 
 @CrossOrigin
 @RestController
@@ -44,8 +44,8 @@ public class UserController {
     public long checkUserDetails(@RequestBody User user) {
 
     List<User> users=userService.getAllUsers();
-    List<User> uName=users.stream().filter(u -> u.getUserName().matches(user.getUserName())).limit(1).toList();
-    List<User> uPassword=users.stream().filter(u -> u.getPassword().matches(user.getPassword())).limit(1).toList();
+    List<User> uName=users.stream().filter(u -> u.getUserName().matches(user.getUserName())).limit(1).collect(toList());
+    List<User> uPassword=users.stream().filter(u -> u.getPassword().matches(user.getPassword())).limit(1).collect(toList());
 
     if (uName.size() >= 1 && uPassword.size() >=1) {
     User userId=uName.get(0);
@@ -67,7 +67,7 @@ public class UserController {
     @PostMapping("/save")
     public boolean pushUser(@RequestBody User user) {
     	List<User> users=userService.getAllUsers();
-    	List<User> users2=users.stream().filter(s->s.getUserName().matches(user.getUserName())).toList();
+    	List<User> users2=users.stream().filter(s->s.getUserName().matches(user.getUserName())).collect(toList());
 		if(users2.size()>0)
 		{
 			return false;
